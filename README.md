@@ -1,5 +1,5 @@
 # NodeJs Bagy Server
-< img src="images/LogoBagy.jpeg" width="200" height="200">
+<img src="images/LogoBagy.jpeg" width="200" height="200">
 ## Arquitetura
 
 A arquitetura do projeto segue alguns principios do DDD, no qual os arquivos são organizados por dominio da aplicação. Eu busquei desacoplar a camada de infra da camada de domínio para possibilitar uma maior flexibilidade em relação as dependecias de infra do projeto.
