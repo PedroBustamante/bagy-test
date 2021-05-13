@@ -24,26 +24,26 @@ Busquei atender alguns principios do SOLID como Principio da Responsabilidade Ú
 
 ### Docker
 
-`git clone https://github.com/lucascco/bagy-server.git`
+`git clone https://github.com/PedroBustamante/bagy-test.git`
 
 `cd bagy-server`
 
 - Este comando pode demorar um tempo
-`docker build -t lucascco/bagy-server . `
+`docker build -t bagyserver . `
 
-`docker run -p 4000:8080 -d lucascco/bagy-server`
+`docker run -p 4000:8080 -d bagyserver`
 
 Agora é só acessar http://localhost:4000/graphql do seu navegador.
 
 ### Sem Docker
 
-`git clone https://github.com/lucascco/bagy-server.git`
+`git clone https://github.com/PedroBustamante/bagy-test.git`
 
-`cd bagy-server`
+`cd bagy-test`
 
-`yarn` or `npm install`
+`yarn install` or `npm install`
 
-`yarn dev:server` or `npm dev:server`
+`yarn dev:server` or `npm run-script dev:server`
 
 Agora é só acessar http://localhost:8080/graphql do seu navegador.
 
