@@ -26,7 +26,7 @@ Busquei atender alguns principios do SOLID como Principio da Responsabilidade Ú
 
 `git clone https://github.com/PedroBustamante/bagy-test.git`
 
-`cd bagy-server`
+`cd bagy-test`
 
 - Este comando pode demorar um tempo
 `docker build -t bagyserver . `
