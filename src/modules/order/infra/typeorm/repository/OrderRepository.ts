@@ -15,11 +15,12 @@ export class OrderRepository implements IOrderRepository {
   public async createOrder(
     customer: Customer,
     installment: number,
+    status: string,
   ): Promise<Order> {
     const orderCreation = this.ormRepository.create({
       customer,
       installment,
-      status: 'approved',
+      status,
       dtOrder: format(new Date(), 'yyyy-MM-dd hh:mm:ss'),
     });
     return orderCreation.save();

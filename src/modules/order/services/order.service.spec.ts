@@ -107,7 +107,7 @@ describe('Order Service', () => {
     const productIdOne = fakeProductRepository.products.find(
       fakeProd => fakeProd.id === 1,
     );
-    const isAvailable = orderService.checkSotckAvailable(
+    const isAvailable = orderService.checkStockAvailable(
       { id: 1, qtt: 12 },
       productIdOne as Product,
     );
@@ -118,11 +118,11 @@ describe('Order Service', () => {
     const productIdOne = fakeProductRepository.products.find(
       fakeProd => fakeProd.id === 1,
     );
-    const isAvailableLess = orderService.checkSotckAvailable(
+    const isAvailableLess = orderService.checkStockAvailable(
       { id: 1, qtt: 8 },
       productIdOne as Product,
     );
-    const isAvailableEqual = orderService.checkSotckAvailable(
+    const isAvailableEqual = orderService.checkStockAvailable(
       { id: 1, qtt: 10 },
       productIdOne as Product,
     );

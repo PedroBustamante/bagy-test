@@ -23,11 +23,14 @@ export class OrderService {
     order: Order;
     products: Product[];
     testEmailUrl: string;
+    status: string;
   }> {
+    let Status = `approved`;
     const { listProducts, idCustomer, installment } = reqOrder;
     const customer = await this.customerRepository.findeById(idCustomer);
     if (!customer) {
-      throw Error(`Customer was not found.`);
+      Status = `not approved`;
+      throw Error(`Customer was not found.`);  
     }
 
     const prodIds = [];
@@ -41,16 +44,23 @@ export class OrderService {
     );
     listProductStatus.forEach(prodStatus => {
       if (!prodStatus.productDB) {
+        Status = `not approved`;
         throw Error(`Product ${prodStatus.prodId} was not found.`);
       }
       if (!prodStatus.hasInStock) {
-        throw Error(`Product ${prodStatus.productDB.name} out of stock.`);
+        Status = `not approved`;
+        throw Error(`The number of ${prodStatus.productDB.name} on stock is ${prodStatus.productDB.qttStock}.`);
+      }
+      if (prodStatus.qttWanted <= 0){
+        Status = `not approved`;
+        throw Error(`Quantity ordered should be greater then 0`);
       }
     });
 
     const orderSaved = await this.orderRepository.createOrder(
       customer,
       installment,
+      Status,
     );
     const testEmailUrl = await this.sendEmailOrder(customer, orderSaved);
     await this.productRepository.updateStock(listProductStatus);
@@ -65,6 +75,7 @@ export class OrderService {
       testEmailUrl: typeof testEmailUrl === 'string' ? testEmailUrl : '',
       order: orderSaved,
       products: orderProducts.map(orderProd => orderProd.product),
+      status: Status,
     };
   }
 
@@ -73,7 +84,7 @@ export class OrderService {
     products: Product[],
   ): IProductStatus {
     const productDB = products.find(prod => prod.id === prodInOrder.id);
-    const hasInStock = this.checkSotckAvailable(prodInOrder, productDB);
+    const hasInStock = this.checkStockAvailable(prodInOrder, productDB);
     return {
       hasInStock,
       productDB,
@@ -95,7 +106,7 @@ export class OrderService {
     return resultMessateUrl;
   }
 
-  public checkSotckAvailable(
+  public checkStockAvailable(
     prodInOrder: ProductInOrder,
     product: Product | undefined,
   ): boolean {
